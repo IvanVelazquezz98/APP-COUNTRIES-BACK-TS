@@ -1,5 +1,5 @@
 const { Router } = require("express");
-
+const { encrypt } = require("../helpers/handleBcrypt");
 const {Activity,Country,User} = require('../db')
 const router = Router();
 
@@ -45,7 +45,7 @@ router.get("/All", async(req , res)=>{
     }
   })
 
-  router.get("/register", async(req , res)=>{
+  router.post("/register", async(req , res)=>{
     try {
       const { email, name, password } = req.body;
       if (email && name && password) {
@@ -75,7 +75,7 @@ router.get("/All", async(req , res)=>{
       }
   
     } catch (error) {
-      next(error);
+      console.log(error)
     }
   })
 
@@ -114,7 +114,7 @@ router.get("/All", async(req , res)=>{
       }
   
     } catch (err) {
-      next(err);
+      console.log(err)
     }
   })
 
