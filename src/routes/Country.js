@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const {getAllCountries} = require('../controllers/getCountries');
+const {Activity,Country,User} = require('../db')
 
 
 
@@ -98,7 +99,26 @@ router.get("/:name", async(req , res)=>{
         }
     })
 
-
+    router.get("/CreatedForUser", async(req , res)=>{
+        const { id } = req.body;
+        try {
+          
+            const countries = await Country.findOne({
+              where: {
+                userCountries: id,
+              },
+            });
+            if(countries){
+            res.status(200).send({existe:true,
+            countries: countries});
+           }else {
+              res.status(400).send({existe:false,
+              msg:'el usuario no tiene paises creados'})
+          }
+        } catch (error) {
+          next(error);
+        }
+      })
 
 
     module.exports = router;

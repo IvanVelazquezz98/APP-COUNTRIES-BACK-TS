@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { encrypt } = require("../helpers/handleBcrypt");
 const {Activity,Country,User} = require('../db')
+const { compare } = require("../helpers/handleBcrypt");
 const router = Router();
 
 
@@ -35,9 +36,9 @@ router.get("/All", async(req , res)=>{
         });
         if(user){
         res.status(200).send({existe:true,
-        msg:'el usuario existe'});
+        user:user});
        }else {
-          res.status(200).send({existe:false,
+          res.status(400).send({existe:false,
           msg:'el usuario no existe'})
       }
     } catch (error) {
@@ -79,8 +80,8 @@ router.get("/All", async(req , res)=>{
     }
   })
 
-
-  router.get("/login", async(req , res)=>{
+ 
+  router.post("/register/login", async(req , res)=>{
 
 
 
@@ -88,7 +89,11 @@ router.get("/All", async(req , res)=>{
   
     try {
       if (email) {
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({
+          where: {
+            email,
+          },
+        });
   
         if (!user) {
           return res.status(404).json("El usuario no existe");
@@ -101,7 +106,7 @@ router.get("/All", async(req , res)=>{
               userId: user.id,
               totalUser: user
             }
-            return res.status(200).json(result);
+            return res.status(200).json({existe:true , result : result});
   
           } else {
             return res.status(404).json("La contraseña no es correcta");
