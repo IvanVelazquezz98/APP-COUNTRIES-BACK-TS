@@ -49,7 +49,7 @@ router.get("/:name", async(req , res)=>{
  
     router.post("/CreateCountry", async (req  , res ) =>{
         try {
-            const {id,
+            const {
                 name,
                 flag,
                 continent,
@@ -57,27 +57,28 @@ router.get("/:name", async(req , res)=>{
                 subregion,
                 area,
                 population,
-                populationVirtual,
-                unMember,
-                location,
-                timezones} = req.body
-    
-            const countryCreate = await model.Countries.create({
-                id,
-                name,
-                flag,
-                continent,
-                capital,
-                subregion,
-                area,
-                population,
-                populationVirtual,
-                unMember,
                 location,
                 timezones,
+                userId} = req.body
+    
+            const countryCreate = await Country.create({
+                name,
+                flag,
+                continent,
+                capital,
+                subregion,
+                area,
+                population,
+                location,
+                timezones,
+                userId : userId
             })
-             res.status(200).send( "Country successfully created")
-           return await Promise.all(countryCreate)
+            if(countryCreate){
+             res.status(200).send( {message:"Country successfully created" , country:countryCreate})
+            return
+        }else{
+            return res.status(400).send('fallo la creacion del el country')
+        }
            
         } catch (err) {
             return res.status(400).send('Error - Country not created')
@@ -89,7 +90,7 @@ router.get("/:name", async(req , res)=>{
         try{
             let id = req.params.id
 
-            await model.Countries.destroy({
+            await Country.destroy({
                 where: {id:id}
             })
             res.status(200).send("Deleted Country")
@@ -105,7 +106,7 @@ router.get("/:name", async(req , res)=>{
           
             const countries = await Country.findOne({
               where: {
-                userCountries: id,
+                userId: id,
               },
             });
             if(countries){

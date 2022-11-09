@@ -36,8 +36,8 @@ const { Country , Activity , User} = sequelize.models;
 Country.belongsToMany(Activity, {through: 'CountryActivity'});
 Activity.belongsToMany(Country, {through: 'CountryActivity'});
 
-User.hasOne(Country , {through: 'userCountries'})
-Country.belongsTo(User , {through: 'userCountries'})
+User.hasMany(Country)
+Country.belongsTo(User)
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 

@@ -38,11 +38,12 @@ router.get("/All", async(req , res)=>{
         res.status(200).send({existe:true,
         user:user});
        }else {
-          res.status(400).send({existe:false,
+          res.status(200).send({existe:false,
           msg:'el usuario no existe'})
       }
     } catch (error) {
-      next(error);
+      res.status(400).send({existe:false,
+        msg:'el usuario no existe'})
     }
   })
 
