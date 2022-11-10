@@ -20,7 +20,7 @@ module.exports = sequelize => {
       type: DataTypes.STRING,
     },
     imagen_profile: {
-      type: DataTypes.STRING
+      type: DataTypes.TEXT
     },
     password: { 
       type: DataTypes.STRING,

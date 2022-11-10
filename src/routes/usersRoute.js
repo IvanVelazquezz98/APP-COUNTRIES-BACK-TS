@@ -93,11 +93,8 @@ router.put("/update", async (req, res) => {
     let {
       userId,
       name,
-      lastName,
       descripcion,
       imagen_profile,
-      password,
-      email
     } = req.body;
 
     const user = await User.findByPk(userId);
@@ -109,11 +106,8 @@ router.put("/update", async (req, res) => {
     else {
       await user?.update({
       name,
-      lastName,
       descripcion,
       imagen_profile,
-      password,
-      email
       });
       res.status(200).send({ message: "Se actualizo la informacion del usuario", user: user });
     }
