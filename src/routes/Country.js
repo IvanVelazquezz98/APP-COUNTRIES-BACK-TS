@@ -100,11 +100,11 @@ router.get("/:name", async(req , res)=>{
         }
     })
 
-    router.get("/CreatedForUser", async(req , res)=>{
-        const { id } = req.body;
+    router.get("/user/:id", async(req , res)=>{
+        const  id  = req.params.id;
         try {
           
-            const countries = await Country.findOne({
+            const countries = await Country.findAll({
               where: {
                 userId: id,
               },
@@ -117,7 +117,7 @@ router.get("/:name", async(req , res)=>{
               msg:'el usuario no tiene paises creados'})
           }
         } catch (error) {
-          next(error);
+          console.log(error)
         }
       })
 
