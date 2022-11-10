@@ -31,11 +31,11 @@ const {Favorites} = require('../db')
                 population,
                 location,
                 timezones,
-                userId : userId
+                userId
             })
             if(favoriteCreate){
-             res.status(200).send( {message:"favorite successfully created" , country:countryCreate})
-            return
+             res.status(200).send( {message:"favorite successfully created" , favorite:favoriteCreate})
+    
         }else{
             return res.status(400).send('fallo la creacion del favorito')
         }
