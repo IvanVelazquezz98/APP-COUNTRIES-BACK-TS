@@ -162,5 +162,33 @@ router.post("/register/login", async (req, res) => {
   }
 })
 
+router.put("/update/score", async (req, res) => {
+
+  try {
+    let {
+      userId,
+      point
+    } = req.body;
+
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      res.status(400).send({ message: "no se encontro el usuario" })
+    }
+
+    else {
+      await user?.update({
+        point
+      });
+      res.status(200).send({ message: "Se actualizo la puntuacion del usuario", user: user });
+    }
+
+
+  } catch (e) {
+
+    next(e);
+  }
+})
+
 
 module.exports = router;

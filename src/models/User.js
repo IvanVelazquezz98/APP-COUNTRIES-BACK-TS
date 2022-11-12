@@ -30,7 +30,7 @@ module.exports = sequelize => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    email: {
+    point: {
       type: DataTypes.STRING,
       allowNull: true
     }
