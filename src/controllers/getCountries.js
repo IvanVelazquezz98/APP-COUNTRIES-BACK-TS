@@ -1,5 +1,5 @@
 const axios = require("axios")
-const { Country , Activity } = require("../db")
+const { Country , Activity,User } = require("../db")
 
 
 
@@ -39,8 +39,9 @@ const getDataBaseInfo = async () => {
             attributes: ["name"],
             through: {
                 attributes: []
-            } 
-        }
+            }
+        },
+        include:[User]
      })
     } catch (e) {
         console.log(e)
